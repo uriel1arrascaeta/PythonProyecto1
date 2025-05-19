@@ -1,0 +1,17 @@
+{%extends 'blog/base.html'%}
+
+
+{%block title%}
+Lista de Publicaciones
+{% endblock %}
+{% block content %}
+<ul class="list-group">
+    {% for post in posts %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <span>{{ post.titulo }}</span>
+        <span>{{ post.contenido }}</span>
+        <span class="badge bg-secondary">Publicado el: {{ post.fecha_publicacion }}</span>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock content %}
