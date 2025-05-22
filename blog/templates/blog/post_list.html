@@ -1,17 +1,16 @@
-{%extends 'blog/base.html'%}
+{% extends "blog/base.html" %}
 
+{% block title %}Lista de Posts{% endblock %}
 
-{%block title%}
-Lista de Publicaciones
-{% endblock %}
 {% block content %}
-<ul class="list-group">
+<h2>Posts publicados</h2>
+<ul>
     {% for post in posts %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span>{{ post.titulo }}</span>
-        <span>{{ post.contenido }}</span>
-        <span class="badge bg-secondary">Publicado el: {{ post.fecha_publicacion }}</span>
+    <li>
+        {{ post.titulo }} - {{ post.autor.nombre }} - {{ post.categoria.nombre }}
+        <a href="{% url 'editar_post' post.id %}">Editar</a> |
+        <a href="{% url 'eliminar_post' post.id %}">Eliminar</a>
     </li>
     {% endfor %}
 </ul>
-{% endblock content %}
+{% endblock %}

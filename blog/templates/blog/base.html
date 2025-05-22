@@ -1,19 +1,20 @@
-<!DOCTYPE html>
-<html lang="es">
+{% block title %}Lista de Posts{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Blog Django{% endblock %}</title>
-</head>
+{% block content %}
+<h2>Posts publicados</h2>
 
-<body>
-    <h1>Blog con Django</h1>
-    <nav>
-        <a href="{% url 'home' %}">Inicio</a> |
-        <a href="{% url 'crear_post' %}">Crear Post</a> |
-    </nav>
-    <hr>
-    {% block content %}{% endblock %}
-</body>
-
-</html>
+{% if posts %}
+<ul>
+    {% for post in posts %}
+    <li>
+        <strong>{{ post.titulo }}</strong> — {{ post.autor.nombre }} ({{ post.categoria.nombre }})
+        <br>
+        <a href="{% url 'editar_post' post.id %}">Editar</a> |
+        <a href="{% url 'eliminar_post' post.id %}">Eliminar</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No hay posts aún.</p>
+{% endif %}
+{% endblock %}

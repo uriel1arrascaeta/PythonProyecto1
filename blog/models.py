@@ -1,32 +1,30 @@
+# blog/models.py
+
 from django.db import models
-from django.utils import timezone
 
 
-class Author(models.Model):
-    name = models.CharField(max_length=100)
-    bio = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    description = models.TextField(blank=True, null=True)
-
-    class Meta:
-        verbose_name_plural = "categories"
+class Autor(models.Model):
+    nombre = models.CharField(max_length=100)
+    email = models.EmailField()
 
     def __str__(self):
-        return self.name
+        return self.nombre
+
+
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombre
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    author = models.ForeignKey(
-        Author, on_delete=models.CASCADE, related_name='posts')
-    updated_at = models.DateTimeField(auto_now=True)
+    titulo = models.CharField(max_length=200)
+    contenido = models.TextField()
+    fecha = models.DateTimeField(auto_now_add=True)
+    autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
+    categoria = models.ForeignKey(
+        Categoria, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return self.title
+        return self.titulo

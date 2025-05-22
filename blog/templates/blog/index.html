@@ -1,0 +1,41 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Inicio - Mi Blog{% endblock %}
+
+{% block content %}
+{% if query %}
+<h2>Resultados de búsqueda para: "{{ query }}"</h2>
+{% else %}
+<h2>Últimos Posts</h2>
+{% endif %}
+
+{% if posts %}
+<ul>
+    {% for post in posts %}
+    <li>
+        <h3><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h3>
+        <p class="text-muted">
+            Por: {{ post.author.name }}
+            {% if post.category %}
+            | Categoría: {{ post.category.name }}
+            {% endif %}
+            | Publicado: {{ post.created_at|date:"d M Y" }}
+        </p>
+        <p>{{ post.content|truncatewords_html:30|safe }}</p>
+        <p>
+            <a href="{% url 'edit_post' post.pk %}">Editar</a> |
+            <a href="{% url 'delete_post' post.pk %}">Eliminar</a>
+        </p>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+{% if query %}
+<p>No se encontraron posts que coincidan con tu búsqueda: "{{ query }}".</p>
+{% else %}
+<p>No hay posts disponibles todavía. ¡Sé el primero en <a href="{% url 'crear_post' %}">crear uno</a>!</p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

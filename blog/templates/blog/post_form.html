@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+{% if editar %}Editar Post{% else %}Crear Post{% endif %}
+{% endblock %}
+
+{% block content %}
+<h2>{% if editar %}Editar post{% else %}Crear un nuevo post{% endif %}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">
+        {% if editar %}Actualizar{% else %}Guardar{% endif %}
+    </button>
+</form>
+{% endblock %}
